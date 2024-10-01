@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery List App</title>
+    <link rel="stylesheet" href="css/groceryList.css">
+    <link rel="icon" href="images/grocery-list-logo.png" type="image/x-icon">
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <header>
+          <h1>Grocery List</h1>
+          <div class="header-icons">
+            <iconify-icon icon="mdi:store-marker" class="store-icon"></iconify-icon>
+            <div class="shopping">
+              <img src="images/shopping-cart.png" alt="Shopping Cart">
+              <span class="quantity">0</span>
+            </div>
+          </div>
+        </header>
+
+        <!---- Categories ---->
+        <div class="category-container">
+          <div class="category" onclick="filterByCategory('all')">
+            <button id="product-category">
+              <span>All</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('fruits')">
+            <button id="product-category">
+              <span>Fruits</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('snacks')">
+            <button id="product-category">
+              <span>Snacks</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('meat')">
+            <button id="product-category">
+              <span>Meat</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('grains')">
+            <button id="product-category">
+              <span>Grains</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('seafood')">
+            <button id="product-category">
+              <span>Seafood</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('vegetables')">
+            <button id="product-category">
+              <span>Vegetables</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('bakery')">
+            <button id="product-category">
+              <span>Bakery</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('beverages')">
+            <button id="product-category">
+              <span>Beverages</span>
+            </button>
+          </div>
+          <div class="category" onclick="filterByCategory('spices')">
+            <button id="product-category">
+              <span>Spices</span>
+            </button>
+          </div>
+        </div>
+
+        <!---- Search Bar ---->
+        <div class="search-container">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21 20l-4.35-4.35a8.5 8.5 0 10-1.42 1.42L20 21l1-1zm-9.5-3A6.5 6.5 0 1117 10.5 6.5 6.5 0 0111.5 17z" />
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search">
+        </div>
+      </div>
+
+      <!---- Product List ---->
+      <div class="list">
+        <div class="empty-message" style="display: none;">
+          <img src="path/to/your/icon.png" alt="Empty Cart Icon" class="empty-icon">
+          <h2>Your List is Empty</h2>
+          <p>Create a list and add them to your trolley for an easier shopping experience.</p>
+        </div>
+        <div class="item">
+          <img src="images/sample-product.jpg" alt="Sample Product">
+          <div>
+            <iconify-icon icon="mdi:text-box-edit" id="edit" onclick="openEditModal()"></iconify-icon>
+            <div class="title">Sample Product</div>
+            <div class="price">₱100.00</div>
+            <button>Add To Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!---- Store Selection Modal ---->
+    <div id="storeModal" class="store-modal">
+      <div class="store-modal-content">
+        <span class="close" id="closeStoreModal">&times;</span>
+        <h2>Store's Nearby </iconify-icon>
+        </h2>
+        <form id="storeForm">
+          <div class="form-group">
+            <label for="storeSelection">Choose a store:</label>
+            <select id="storeSelection" name="storeSelection">
+              <option value="">-- Please choose a store --</option>
+              <option value="market">Market</option>
+              <option value="mall">Mall</option>
+              <option value="sbg">SBG</option>
+              <option value="fk">FK</option>
+            </select>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="store-btn">Select Store</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!---- Navbar ---->
+    <div class="bottom-navbar">
+      <button class="nav-button">
+        <iconify-icon icon="carbon:settings" style="color: gray; font-size: 26px; margin-left: 20px;"></iconify-icon>
+      </button>
+      <button class="nav-button" id="addProductBtn">
+        <iconify-icon icon="mdi:plus-circle" style="color: red; font-size: 34px;"></iconify-icon>
+      </button>
+      <button class="nav-button show-btn" id="cartButton">
+        <iconify-icon icon="fluent:clipboard-task-list-ltr-20-regular" style="color: green; font-size: 26px; margin-right: 16px"></iconify-icon>
+      </button>
+    </div>
+
+    <!---- Settings Modal ---->
+    <div id="settingsModal" class="settings-modal">
+      <div class="settings-modal-content">
+        <span class="close" id="closeSettingsModal">&times;</span>
+        <h2>Settings</h2>
+        <form id="settingsForm">
+          <div class="form-group">
+            <label for="sort-list">Sort List:</label>
+            <select id="sort-list" name="sort-list" onchange="sortProducts()">
+              <option value="">-- Please choose a list --</option>
+              <option value="product-name">Product Name</option>
+              <option value="price">Price</option>
+              <option value="priority">Priority</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="currency">Preferred Currency:</label>
+            <select id="currency" name="currency">
+              <option value="">-- Please choose a currency --</option>
+              <option value="PHP">₱ Philippine Peso</option>
+              <option value="USD">$ US Dollar</option>
+              <option value="EUR">€ Euro</option>
+              <option value="JPY">¥ Japanese Yen</option>
+            </select>
+          </div>
+          <div class="settings-btns">
+            <button type="submit" class="submit-btn">Save Settings</button>
+            <button class="logoutButton" id="logoutButton" onclick="window.location.href='login.html'">Logout</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!---- Bottom Sheet Modal ---->
+    <div class="bottom-sheet">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="header">
+          <div class="drag-icon">
+            <span></span>
+          </div>
+        </div>
+        <div class="body">
+          <div class="prev-list-header">
+            <h2>Previous List</h2>
+            <button class="clr-btn">Clear List</button>
+          </div>
+          <div class="previous-items"></div>
+        </div>
+      </div>
+    </div>
+
+    <!---- Check List Card ---->
+    <div class="card">
+      <button id="removeAllBtn">Remove All</button>
+      <h1>Check List</h1>
+      <ul class="listCard"></ul>
+      <div class="checkOut">
+        <div class="total">₱0</div>
+        <div class="closeShopping">Save</div>
+      </div>
+    </div>
+
+    <!---- Add Product Modal ---->
+    <div id="productModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Add Product</h2>
+        <form id="productForm">
+          <div class="form-group">
+            <label for="productName">Product Name:</label>
+            <input type="text" id="productName" name="productName" required>
+          </div>
+          <div class="form-group">
+            <label for="brand">Brand:</label>
+            <input type="text" id="brand" name="brand" required>
+          </div>
+          <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" required>
+          </div>
+          <div class="form-group">
+            <label for="category">Category:</label>
+            <select name="category" id="category" required>
+              <option value="">-- Please choose a category --</option>
+              <option value="vegetables">Vegetables</option>
+              <option value="fruits">Fruits</option>
+              <option value="snacks">Snacks</option>
+              <option value="beverages">Beverages</option>
+              <option value="meat">Meat</option>
+              <option value="seafood">Seafood</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="store">Store:</label>
+            <input type="text" id="store" name="store" required>
+          </div>
+          <div class="form-group">
+            <label for="productImage">Product Image:</label>
+            <input type="file" id="productImage" name="productImage" accept="image/*" required>
+          </div>
+          <button type="submit" class="submit-btn">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <!---- Edit Product Modal ---->
+    <div id="editProductModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeEditModal">&times;</span>
+        <h2>Edit Product</h2>
+        <form id="editProductForm">
+          <div class="form-group">
+            <label for="editProductName">Product Name:</label>
+            <input type="text" id="editProductName" name="productName" required>
+          </div>
+          <div class="form-group">
+            <label for="editBrand">Brand:</label>
+            <input type="text" id="editBrand" name="brand" required>
+          </div>
+          <div class="form-group">
+            <label for="editPrice">Price:</label>
+            <input type="number" id="editPrice" name="price" required>
+          </div>
+          <div class="form-group">
+            <label for="editCategory">Category:</label>
+            <select name="category" id="editCategory" required>
+              <option value="vegetables">Vegetables</option>
+              <option value="fruits">Fruits</option>
+              <option value="snacks">Snacks</option>
+              <option value="beverages">Beverages</option>
+              <option value="meat">Meat</option>
+              <option value="seafood">Seafood</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editStore">Store:</label>
+            <input type="text" id="editStore" name="store" required>
+          </div>
+          <div class="form-group">
+            <label for="editProductImage">Product Image:</label>
+            <input type="file" id="editProductImage" name="productImage" accept="image/*">
+          </div>
+          <div class="button-container">
+            <button type="submit" class="submit-btn">Update</button>
+            <button type="button" class="delete-btn" id="deleteProductBtn">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!---- Function Script ---->
+    <script src="javascript/App.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery List App</title>
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="icon" href="images/grocery-list-logo.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <img src="images/app-background.png" alt="" id="login-background">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form id="loginForm" onsubmit="login(event)">
+                <label for="username">Username</label>
+                <input type="text" id="login-username" name="username" placeholder="Enter username" required />
+                <label for="password">Password</label>
+                <input type="password" id="login-password" name="password" placeholder="Enter password" required />
+                <button type="submit">Login</button>
+                <span class="cta"> Don't have an account yet?<a href="./register.html">Register</a></span>
+                <p class="error" id="login-error"></p>
+            </form>
+        </div>
+    </div>
+    <script src="javascript/Auth.js"></script>
+</body>
+</html>
